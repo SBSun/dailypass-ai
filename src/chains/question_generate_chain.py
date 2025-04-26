@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from langchain.chains.llm import LLMChain
 from langchain_community.chat_models import ChatOpenAI
