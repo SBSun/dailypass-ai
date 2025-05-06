@@ -17,4 +17,5 @@ class Question(Base):
     job_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     difficulty: Mapped[QuestionDifficulty] = mapped_column(EnumType(QuestionDifficulty), nullable=False)
+    answer: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, nullable=False, default=func.now())
