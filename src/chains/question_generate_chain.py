@@ -22,7 +22,7 @@ class QuestionGenerateChain:
         if isinstance(response, AIMessage):
             print("AIMessage content:", response.content)
         else:
-            print("Response is not an AIMessage object:", response)
+            raise ValueError("Response is not an AIMessage object.", response)
 
         import json
         try:
