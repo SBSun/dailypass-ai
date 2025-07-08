@@ -8,13 +8,20 @@ from src.prompts.question_generate_prompts import QUESTION_GENERATE_PROMPT
 
 
 class QuestionGenerateChain:
+    _instance: "QuestionGenerateChain" = None
+
     def __init__(self):
         self.llm = ChatOpenAI(
             model_name="gpt-4o-mini",
             temperature=0.7
         )
-
         self.chain = RunnableSequence(QUESTION_GENERATE_PROMPT | self.llm)
+
+    @classmethod
+    def get_instance(cls) -> "QuestionGenerateChain":
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     def generate_questions(self, job: str, difficulty: str, count: int) -> List[Dict[str, Any]]:
         response = self.chain.invoke(input={"job": job, "difficulty": difficulty, "count": count})

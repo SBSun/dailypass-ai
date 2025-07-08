@@ -18,8 +18,6 @@ app = FastAPI(
     }
 )
 
-app.include_router(question_router)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(question_router)
 
 if __name__ == "__main__":
     import uvicorn
