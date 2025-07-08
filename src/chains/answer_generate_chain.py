@@ -5,13 +5,20 @@ from langchain_openai import ChatOpenAI
 from src.prompts.answer_generate_prompts import ANSWER_GENERATE_PROMPT
 
 class AnswerGenerateChain:
+    _instance: "AnswerGenerateChain" = None
+
     def __init__(self):
         self.llm = ChatOpenAI(
             model_name="gpt-4o-mini",
             temperature=0.
         )
-
         self.chain = RunnableSequence(ANSWER_GENERATE_PROMPT | self.llm)
+
+    @classmethod
+    def get_instance(cls) -> "AnswerGenerateChain":
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     def generate_answer(self, question: str) -> str:
         response = self.chain.invoke(input={"question": question})

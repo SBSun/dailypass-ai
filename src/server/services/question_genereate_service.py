@@ -1,4 +1,3 @@
-
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -9,13 +8,12 @@ from src.server.questions.models import Question
 from src.server.questions.schemas import QuestionGenerateReqeust
 from src.vectorstores.question_vectorstore import QuestionVectorStore
 
-
 def generate_questions(db: Session, request: QuestionGenerateReqeust) -> None:
     try:
         job = get_by_id(db, request.job_id)
 
-        question_chain = QuestionGenerateChain()
-        answer_chain = AnswerGenerateChain()
+        question_chain = QuestionGenerateChain.get_instance()
+        answer_chain = AnswerGenerateChain.get_instance()
         vector_store = QuestionVectorStore.get_instance()
 
         new_questions = question_chain.generate_questions(
