@@ -1,32 +1,28 @@
-from typing import List
-from uuid import UUID
+from fastapi import APIRouter, UploadFile, File
+import logging
 
-from fastapi import APIRouter, Depends, Query
-from sqlalchemy.orm import Session
+from src.server.questions.schema import QuestionGenerateResponse, QuestionGenerateRequest
+from src.server.services import question_generate_service
 
-from src.db.database import get_db
-from src.server.questions.enums import QuestionDifficulty
-from src.server.questions.repository import get_questions_by_job
-from src.server.questions.schemas import QuestionGenerateReqeust, QuestionResponse
-from src.server.services.question_genereate_service import generate_questions
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/questions",
     tags=["Question"],
 )
 
-@router.post("", summary="면접 질문 생성")
-def generate(
-    request: QuestionGenerateReqeust,
-    db: Session = Depends(get_db)
-):
-    return generate_questions(db, request)
+@router.post("/generate-questions",
+          summary="PDF 기반 자격증 문제 생성",
+          description="PDF 파일을 업로드하여 자격증 시험 문제를 생성합니다.")
+async def generate_questions(
+    file: UploadFile = File(..., description="분석할 PDF 파일"),
+    num_questions: int = 10,
+    question_type: str = "multiple_choice"
+) -> QuestionGenerateResponse:
+    # 요청 객체 생성
+    request = QuestionGenerateRequest(
+        num_questions=num_questions,
+        question_type=question_type
+    )
 
-
-@router.get("", summary="면접 질문 조회")
-def get_questions(
-    job_id: UUID = Query(...),
-    difficulty: QuestionDifficulty = Query(...),
-    db: Session = Depends(get_db)
-) -> List[QuestionResponse]:
-    return get_questions_by_job(db, job_id, difficulty)
+    return await question_generate_service.generate_questions(file, request)
