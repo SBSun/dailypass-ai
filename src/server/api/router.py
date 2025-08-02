@@ -7,7 +7,7 @@ from src.server.questions.router import router as question_router
 load_dotenv()
 
 app = FastAPI(
-    title="Jobterview AI API",
+    title="Dailypass AI API",
     swagger_ui_parameters={
         "docExpansion": "none",
         "operationsSorter": "method",
