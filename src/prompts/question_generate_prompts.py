@@ -32,7 +32,9 @@ QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
   ]
 }}
 
-주의: 응답에 절대로 코드블럭(예: ```json)이나 설명을 포함하지 마세요. JSON 데이터만 반환하세요.
+주의: 
+- correct_answer는 1부터 시작하세요.
+- 응답에 절대로 코드블럭(예: ```json)이나 설명을 포함하지 마세요. JSON 데이터만 반환하세요.
 
 === 문제 생성 규칙 ===
 1. **PDF 내용 기반**: 제공된 PDF 내용에서만 문제를 생성
