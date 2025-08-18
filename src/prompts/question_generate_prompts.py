@@ -26,8 +26,11 @@ QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
   "questions": [
     {{
       "question": "문제 내용 (명확하고 구체적으로)",
+      "context": "프로그래밍 코드나 문제에 대한 보조 설명. 필요 없는 경우 null",
       "options": ["선택지1", "선택지2", "선택지3", "선택지4"],
-      "correct_answer": 1,
+      "correct_answer": "1",
+      "category": "문제 카테고리 (예: 운영체제, 네트워크, 프로그래밍)",
+      "language": "프로그래밍 언어 (예: java, c, javascript) 또는 plaintext"
     }}
   ]
 }}
@@ -43,6 +46,14 @@ QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
 4. **오답 선택지**: 그럴듯하지만 틀린 선택지 포함
 5. **한국어 사용**: 모든 내용을 한국어로 작성
 6. **전문 용어**: 해당 분야의 정확한 전문 용어 사용
+7. **카테고리 분류**: 문제의 카테고리(예: 운영체제, 네트워크, 자료구조, 프로그래밍)를 정확히 분류하여 `category` 필드에 저장해주세요.
+8. **언어 지정**: 
+   - `category`가 '프로그래밍'인 경우, 문제와 관련된 프로그래밍 언어(예: 'java', 'c', 'python', 'javascript')를 소문자로 `language` 필드에 기입해주세요.
+   - `category`가 '프로그래밍'이 아닌 경우, `language` 필드에 'plaintext'로 설정해주세요.
+9. **컨텍스트(`context`) 필드 활용**:
+   - `category`가 '프로그래밍'인 경우, 문제 풀이에 필요한 코드를 `context` 필드에 제공해주세요.
+   - 특정 용어나 개념에 대한 긴 설명이 문제에 필요한 경우 (예: "다음 설명에 해당하는 용어는?"), 해당 설명을 `context` 필드에 담아주세요.
+   - `context`가 필요 없는 일반적인 문제의 경우, `context` 필드를 null로 설정해주세요.
 
 반드시 올바른 JSON 형식으로만 응답하세요."""
         )

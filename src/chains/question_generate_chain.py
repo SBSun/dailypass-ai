@@ -2,7 +2,7 @@ import json
 import logging
 import os
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 from dotenv import load_dotenv
 from langchain_core.messages import AIMessage
@@ -17,8 +17,11 @@ load_dotenv()
 @dataclass
 class Question:
     question: str
+    context: Optional[str]
     options: List[str]
     correct_answer: str
+    category: str
+    language: str
 
 class QuestionGenerateChain:
     _instance: "QuestionGenerateChain" = None
@@ -51,7 +54,7 @@ class QuestionGenerateChain:
 
             if isinstance(response, AIMessage):
                 response_text = response.content
-                logger.error(f"[LangChain 응답]:\n{response_text}")
+                logger.info(f"[LangChain 응답]:\n{response_text}")
 
                 # JSON 형태로 파싱 시도
                 try:

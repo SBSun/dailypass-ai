@@ -6,14 +6,17 @@ message QuestionGenerateRequest {
   bytes file_content = 1;
 }
 
-message QuestionGenerateResponse {
-  message QuestionInfo {
-    string question = 1;
-    repeated string options = 2;
-    int32 correct_answer = 3;
+  message QuestionGenerateResponse {
+    message QuestionInfo {
+      string question = 1;
+      optional string context = 2;
+      repeated string options = 3;
+      string correct_answer = 4;
+      string category = 5;
+      string language = 6;
+    }
+    repeated QuestionInfo questions = 1;
   }
-  repeated QuestionInfo questions = 1;
-}
 
 service QuestionService {
   rpc GenerateQuestions(QuestionGenerateRequest) returns (QuestionGenerateResponse);

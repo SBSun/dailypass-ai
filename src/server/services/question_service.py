@@ -36,15 +36,19 @@ class QuestionService(question_pb2_grpc.QuestionServiceServicer):
                 # OpenAI로 문제 생성
                 questions = question_chain.generate_questions(extracted_text)
 
-                # 응답 객체 생성
                 response = question_pb2.QuestionGenerateResponse()
 
-                # 생성된 질문들을 응답에 추가
                 for q_data in questions:
                     question_info = response.questions.add()
                     question_info.question = q_data.question
+
+                    if q_data.context is not None:
+                        question_info.context = q_data.context
+
                     question_info.options.extend(q_data.options)
                     question_info.correct_answer = q_data.correct_answer
+                    question_info.category = q_data.category
+                    question_info.language = q_data.language
 
                 logging.info(f"총 {len(questions)}개의 질문을 생성했습니다.")
                 return response
