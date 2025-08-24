@@ -9,19 +9,24 @@ from langchain_core.messages import AIMessage
 from langchain_core.runnables import RunnableSequence
 from langchain_openai import ChatOpenAI
 
-from src.prompts.question_generate_prompts import QUESTION_GENERATE_PROMPT
+from src.prompts.question_generate_prompts import (
+    MULTIPLE_CHOICE_QUESTION_GENERATE_PROMPT,
+    SUBJECTIVE_QUESTION_GENERATE_PROMPT,
+)
 
 logger = logging.getLogger(__name__)
 load_dotenv()
 
+
 @dataclass
 class Question:
     question: str
-    context: Optional[str]
-    options: List[str]
     correct_answer: str
     category: str
     language: str
+    context: Optional[str] = None
+    options: Optional[List[str]] = None
+
 
 class QuestionGenerateChain:
     _instance: "QuestionGenerateChain" = None
@@ -31,9 +36,14 @@ class QuestionGenerateChain:
             model_name="gpt-4o-mini",
             temperature=0.7,
             max_tokens=3000,
-            openai_api_key=os.getenv("OPENAI_API_KEY")
+            openai_api_key=os.getenv("OPENAI_API_KEY"),
         )
-        self.chain = RunnableSequence(QUESTION_GENERATE_PROMPT | self.llm)
+        self.multiple_choice_chain = RunnableSequence(
+            MULTIPLE_CHOICE_QUESTION_GENERATE_PROMPT | self.llm
+        )
+        self.subjective_chain = RunnableSequence(
+            SUBJECTIVE_QUESTION_GENERATE_PROMPT | self.llm
+        )
 
     @classmethod
     def get_instance(cls) -> "QuestionGenerateChain":
@@ -41,14 +51,23 @@ class QuestionGenerateChain:
             cls._instance = cls()
         return cls._instance
 
-    def generate_questions(self, content: str) -> List[Question]:
+    def generate_questions(
+        self, content: str, question_type: str
+    ) -> List[Question]:
         """LangChain을 사용하여 자격증 문제 생성"""
+
+        if question_type == "MULTIPLE_CHOICE":
+            chain = self.multiple_choice_chain
+        elif question_type == "SUBJECTIVE":
+            chain = self.subjective_chain
+        else:
+            raise ValueError(f"Unsupported question type: {question_type}")
+
         try:
-            response = self.chain.invoke(
+            response = chain.invoke(
                 input={
                     "content": content[:4000],  # 토큰 제한을 위해 처음 4000자만 사용
                     "num_questions": 10,
-                    "question_type": "multiple_choice"
                 }
             )
 

@@ -24,19 +24,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0equestion.proto\x12\x08question\"/\n\x17QuestionGenerateRequest\x12\x14\n\x0c\x66ile_content\x18\x01 \x01(\x0c\"\xf0\x01\n\x18QuestionGenerateResponse\x12\x42\n\tquestions\x18\x01 \x03(\x0b\x32/.question.QuestionGenerateResponse.QuestionInfo\x1a\x8f\x01\n\x0cQuestionInfo\x12\x10\n\x08question\x18\x01 \x01(\t\x12\x14\n\x07\x63ontext\x18\x02 \x01(\tH\x00\x88\x01\x01\x12\x0f\n\x07options\x18\x03 \x03(\t\x12\x16\n\x0e\x63orrect_answer\x18\x04 \x01(\t\x12\x10\n\x08\x63\x61tegory\x18\x05 \x01(\t\x12\x10\n\x08language\x18\x06 \x01(\tB\n\n\x08_context2m\n\x0fQuestionService\x12Z\n\x11GenerateQuestions\x12!.question.QuestionGenerateRequest\x1a\".question.QuestionGenerateResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0equestion.proto\x12\x08question\"\xab\x01\n\x17QuestionGenerateRequest\x12\x45\n\rquestion_type\x18\x01 \x01(\x0e\x32..question.QuestionGenerateRequest.QuestionType\x12\x14\n\x0c\x66ile_content\x18\x02 \x01(\x0c\"3\n\x0cQuestionType\x12\x13\n\x0fMULTIPLE_CHOICE\x10\x00\x12\x0e\n\nSUBJECTIVE\x10\x01\"\xf0\x01\n\x18QuestionGenerateResponse\x12\x42\n\tquestions\x18\x01 \x03(\x0b\x32/.question.QuestionGenerateResponse.QuestionInfo\x1a\x8f\x01\n\x0cQuestionInfo\x12\x10\n\x08question\x18\x01 \x01(\t\x12\x14\n\x07\x63ontext\x18\x02 \x01(\tH\x00\x88\x01\x01\x12\x0f\n\x07options\x18\x03 \x03(\t\x12\x16\n\x0e\x63orrect_answer\x18\x04 \x01(\t\x12\x10\n\x08\x63\x61tegory\x18\x05 \x01(\t\x12\x10\n\x08language\x18\x06 \x01(\tB\n\n\x08_context2m\n\x0fQuestionService\x12Z\n\x11GenerateQuestions\x12!.question.QuestionGenerateRequest\x1a\".question.QuestionGenerateResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'question_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_QUESTIONGENERATEREQUEST']._serialized_start=28
-  _globals['_QUESTIONGENERATEREQUEST']._serialized_end=75
-  _globals['_QUESTIONGENERATERESPONSE']._serialized_start=78
-  _globals['_QUESTIONGENERATERESPONSE']._serialized_end=318
-  _globals['_QUESTIONGENERATERESPONSE_QUESTIONINFO']._serialized_start=175
-  _globals['_QUESTIONGENERATERESPONSE_QUESTIONINFO']._serialized_end=318
-  _globals['_QUESTIONSERVICE']._serialized_start=320
-  _globals['_QUESTIONSERVICE']._serialized_end=429
+  _globals['_QUESTIONGENERATEREQUEST']._serialized_start=29
+  _globals['_QUESTIONGENERATEREQUEST']._serialized_end=200
+  _globals['_QUESTIONGENERATEREQUEST_QUESTIONTYPE']._serialized_start=149
+  _globals['_QUESTIONGENERATEREQUEST_QUESTIONTYPE']._serialized_end=200
+  _globals['_QUESTIONGENERATERESPONSE']._serialized_start=203
+  _globals['_QUESTIONGENERATERESPONSE']._serialized_end=443
+  _globals['_QUESTIONGENERATERESPONSE_QUESTIONINFO']._serialized_start=300
+  _globals['_QUESTIONGENERATERESPONSE_QUESTIONINFO']._serialized_end=443
+  _globals['_QUESTIONSERVICE']._serialized_start=445
+  _globals['_QUESTIONSERVICE']._serialized_end=554
 # @@protoc_insertion_point(module_scope)

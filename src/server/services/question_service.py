@@ -33,8 +33,11 @@ class QuestionService(question_pb2_grpc.QuestionServiceServicer):
             try:
                 question_chain = QuestionGenerateChain.get_instance()
 
+                # question_type enum을 문자열로 변환
+                question_type_str = question_pb2.QuestionGenerateRequest.QuestionType.Name(request.question_type)
+
                 # OpenAI로 문제 생성
-                questions = question_chain.generate_questions(extracted_text)
+                questions = question_chain.generate_questions(extracted_text, question_type_str)
 
                 response = question_pb2.QuestionGenerateResponse()
 
@@ -45,7 +48,11 @@ class QuestionService(question_pb2_grpc.QuestionServiceServicer):
                     if q_data.context is not None:
                         question_info.context = q_data.context
 
-                    question_info.options.extend(q_data.options)
+                    # MULTIPLE_CHOICE (0) 일 때만 options 추가
+                    if request.question_type == question_pb2.QuestionGenerateRequest.QuestionType.MULTIPLE_CHOICE:
+                        if q_data.options:
+                            question_info.options.extend(q_data.options)
+                            
                     question_info.correct_answer = q_data.correct_answer
                     question_info.category = q_data.category
                     question_info.language = q_data.language
