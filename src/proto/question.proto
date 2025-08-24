@@ -3,20 +3,26 @@ syntax = "proto3";
 package question;
 
 message QuestionGenerateRequest {
-  bytes file_content = 1;
+  enum QuestionType {
+     MULTIPLE_CHOICE = 0;
+     SUBJECTIVE = 1;
+  }
+
+  QuestionType question_type = 1;
+  bytes file_content = 2;
 }
 
-  message QuestionGenerateResponse {
-    message QuestionInfo {
-      string question = 1;
-      optional string context = 2;
-      repeated string options = 3;
-      string correct_answer = 4;
-      string category = 5;
-      string language = 6;
-    }
-    repeated QuestionInfo questions = 1;
+message QuestionGenerateResponse {
+  message QuestionInfo {
+    string question = 1;
+    optional string context = 2;
+    repeated string options = 3;
+    string correct_answer = 4;
+    string category = 5;
+    string language = 6;
   }
+  repeated QuestionInfo questions = 1;
+}
 
 service QuestionService {
   rpc GenerateQuestions(QuestionGenerateRequest) returns (QuestionGenerateResponse);
