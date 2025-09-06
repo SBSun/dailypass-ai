@@ -16,7 +16,7 @@ MULTIPLE_CHOICE_QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
 {content}
 
 === 문제 생성 요구사항 ===
-- 문제 개수: {num_questions}개
+- 문제 개수: 최대 {num_questions}개. 만들 수 있는 만큼만 중복 없이 생성해주세요.
 - 문제 유형: 객관식
 
 === 출력 형식 ===
@@ -58,6 +58,7 @@ MULTIPLE_CHOICE_QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
     - 문제 풀이에 텍스트가 아닌 보조 정보(예: 코드, 긴 설명)가 필요할 경우, 해당 정보를 반드시 `context` 필드에 제공해야 합니다.
     - 만약 `context`에 담을 수 없는 정보(예: 이미지)를 참조해야만 풀 수 있는 문제라면, 그 문제는 생성하지 말고 폐기한 후, 다른 문제를 생성해야 합니다.
     - `context`가 필요 없는 일반적인 문제의 경우, `context` 필드를 null로 설정해주세요.
+11. **다양한 파트에서 문제 생성**: 내용이 충분하다면, 특정 부분에 집중하지 말고 내용 전반에 걸쳐 다양한 파트에서 문제를 출제해주세요.
 
 반드시 올바른 JSON 형식으로만 응답하세요.""",
         ),
@@ -80,7 +81,7 @@ SUBJECTIVE_QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
 {content}
 
 === 문제 생성 요구사항 ===
-- 문제 개수: {num_questions}개
+- 문제 개수: 최대 {num_questions}개. 만들 수 있는 만큼만 중복 없이 생성해주세요.
 - 문제 유형: 주관식 (단답형)
 
 === 출력 형식 ===
@@ -129,6 +130,7 @@ SUBJECTIVE_QUESTION_GENERATE_PROMPT = ChatPromptTemplate.from_messages(
     - 문제 풀이에 텍스트가 아닌 보조 정보(예: 코드, 긴 설명)가 필요할 경우, 해당 정보를 반드시 `context` 필드에 제공해야 합니다.
     - 만약 `context`에 담을 수 없는 정보(예: 이미지)를 참조해야만 풀 수 있는 문제라면, 그 문제는 생성하지 말고 폐기한 후, 다른 문제를 생성해야 합니다.
     - `context`가 필요 없는 일반적인 문제의 경우, `context` 필드를 null로 설정해주세요.
+12. **다양한 파트에서 문제 생성**: 내용이 충분하다면, 특정 부분에 집중하지 말고 내용 전반에 걸쳐 다양한 파트에서 문제를 출제해주세요.
 
 반드시 올바른 JSON 형식으로만 응답하세요.""",
         ),

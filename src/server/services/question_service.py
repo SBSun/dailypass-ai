@@ -83,9 +83,7 @@ class QuestionService(question_pb2_grpc.QuestionServiceServicer):
                 length_function=len,
             )
 
-            if len(full_text) > 10000:  # 10,000자 이상이면 분할
-                chunks = text_splitter.split_text(full_text)
-                full_text = "\n".join(chunks[:10])  # 처음 10개 청크만 사용
+            
 
             return full_text.strip()
 

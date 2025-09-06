@@ -35,7 +35,7 @@ class QuestionGenerateChain:
         self.llm = ChatOpenAI(
             model_name="gpt-4o-mini",
             temperature=0.7,
-            max_tokens=3000,
+            max_tokens=10000,
             openai_api_key=os.getenv("OPENAI_API_KEY"),
         )
         self.multiple_choice_chain = RunnableSequence(
@@ -66,8 +66,8 @@ class QuestionGenerateChain:
         try:
             response = chain.invoke(
                 input={
-                    "content": content[:4000],  # 토큰 제한을 위해 처음 4000자만 사용
-                    "num_questions": 10,
+                    "content": content,
+                    "num_questions": 50,
                 }
             )
 
